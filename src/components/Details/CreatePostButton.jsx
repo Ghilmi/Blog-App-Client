@@ -53,9 +53,12 @@ export default function CreatePostButton({
       handleOpen();
     } else {
       handleClose();
-      !message.error &&
-        message.inLoading !== null &&
-        naveTo(`/post/details/${post?._id}`);
+
+      if (message.inLoading !== null && !message.error) {
+        if (post?._id) {
+          naveTo(`/post/details/${post?._id}`);
+        }
+      }
     }
   }, [message]);
   const handelCreate = async () => {

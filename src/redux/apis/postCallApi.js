@@ -1,13 +1,27 @@
 import { fetchData } from "../../fetche/fetch";
 import { postActions } from "../slices/slicePosts";
 
-export const getPosts = (page = null) => {
+export const getPosts = (page = null, categoryName = null) => {
   return async (dispatch) => {
     try {
-      const { data } = await fetchData.get(
-        page ? `/api/post?pagination=${page}` : "/api/post",
-        { method: "get" }
-      );
+      let data;
+      console.log(categoryName);
+      if (categoryName) {
+        const { data: temp } = await fetchData.get(
+          `api/post?category=${categoryName}`,
+          { method: "get" }
+        );
+        data = temp;
+        console.log(data);
+      } else {
+        const { data: temp } = await fetchData.get(
+          page ? `/api/post?pagination=${page}` : "/api/post",
+          { method: "get" }
+        );
+        data = temp;
+        console.log(data);
+      }
+
       dispatch(postActions.setPosts(data));
     } catch (error) {
       console.log(error);

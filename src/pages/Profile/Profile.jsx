@@ -41,11 +41,12 @@ export default function Profile() {
     }, 500);
   }, []);
   useEffect(() => {
-    setTimeout(() => {
+    const timeId = setTimeout(() => {
       if (!loginUser) {
         naveTo("/");
       }
     }, 2000);
+    return clearTimeout(timeId);
   }, [loginUser]);
   return (
     <Box sx={{ minHeight: "90vh" }}>

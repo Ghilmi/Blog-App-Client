@@ -25,6 +25,9 @@ export const postSlice = createSlice({
     setMessage(state, action) {
       state.message = action.payload;
     },
+    setNullPosts(state) {
+      state.posts = null;
+    },
   },
 });
 export const postReducer = postSlice.reducer;

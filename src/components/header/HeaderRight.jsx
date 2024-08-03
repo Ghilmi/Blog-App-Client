@@ -9,7 +9,7 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
-import { yellow } from "@mui/material/colors";
+import { red, yellow } from "@mui/material/colors";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,9 @@ export default function HeaderRight({ handelMode, theme }) {
   const user = useSelector(selectUserFromAuth);
   const navTo = useNavigate(); //
   const [anchorEl, setAnchorEl] = useState(null);
+
   const dispatch = useDispatch();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,6 +38,7 @@ export default function HeaderRight({ handelMode, theme }) {
     navTo("/");
     handleClose();
   };
+
   return (
     <>
       <Stack
@@ -54,6 +57,18 @@ export default function HeaderRight({ handelMode, theme }) {
             height: "max-content",
           },
         }}>
+        <IconButton
+          sx={{
+            width: "5rem",
+            height: "5rem",
+            "& i::before": {
+              color: red[700],
+              fontSize: "3rem",
+              cursor: "pointer",
+            },
+          }}>
+          <i className="bi bi-search-heart"></i>
+        </IconButton>
         {user ? (
           <>
             <Tooltip title="Account settings">

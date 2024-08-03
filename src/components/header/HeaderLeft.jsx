@@ -46,7 +46,7 @@ export default function HeaderLeft({ togle, setTogle }) {
             }}>
             Blog
           </Button>
-          <i className="bi bi-pencil-fill"></i>
+          <i className="bi bi-pencil-fill" />
           <IconButton
             sx={{
               Width: "0.5rem",
@@ -55,9 +55,9 @@ export default function HeaderLeft({ togle, setTogle }) {
             }}
             onClick={() => setTogle((prev) => !prev)}>
             {togle ? (
-              <i className="bi bi-x-lg"></i>
+              <i className="bi bi-x-lg" />
             ) : (
-              <i className="bi bi-list"></i>
+              <i className="bi bi-list" />
             )}
           </IconButton>
         </Box>
@@ -72,7 +72,9 @@ export default function HeaderLeft({ togle, setTogle }) {
               fontSize: "0.7rem",
               border: "none",
               py: "0.3rem",
-              px: "0.5rem",
+              px: "1.5rem",
+              width: { xs: "100%", md: "max-content" },
+              justifyContent: "flex-start",
             },
             gap: 1,
             position: { xs: "absolute", md: "static" },
@@ -83,19 +85,19 @@ export default function HeaderLeft({ togle, setTogle }) {
             left: 0,
             clipPath: {
               md: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-              xs:
-                togle === false
-                  ? "polygon(0 0, 100% 0, 100% 0, 0 0)"
-                  : "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+              xs: !togle
+                ? "polygon(0 0, 100% 0, 100% 0, 0 0)"
+                : "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             },
             tansition: "all 0.7s ease-in-out",
+            zIndex: 9,
           }}>
           <Button
             onClick={() => {
               handelClick("/");
             }}
             variant="text"
-            startIcon={<i className="bi bi-house"></i>}>
+            startIcon={<i className="bi bi-house" />}>
             Home
           </Button>
           <Button
@@ -103,7 +105,7 @@ export default function HeaderLeft({ togle, setTogle }) {
               handelClick("/posts");
             }}
             variant="text"
-            startIcon={<i className="bi bi-postcard-heart-fill"></i>}>
+            startIcon={<i className="bi bi-postcard-heart-fill" />}>
             Posts
           </Button>
           {user && (
@@ -112,7 +114,7 @@ export default function HeaderLeft({ togle, setTogle }) {
                 handelClick("/create");
               }}
               variant="text"
-              startIcon={<i className="bi bi-file-earmark-plus"></i>}>
+              startIcon={<i className="bi bi-file-earmark-plus" />}>
               Create
             </Button>
           )}
@@ -125,7 +127,7 @@ export default function HeaderLeft({ togle, setTogle }) {
                 flexWrap: "nowrap",
               }}
               variant="text"
-              startIcon={<i className="bi bi-file-earmark-spreadsheet"></i>}>
+              startIcon={<i className="bi bi-file-earmark-spreadsheet" />}>
               Admin Dashboard
             </Button>
           )}

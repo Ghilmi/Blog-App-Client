@@ -4,14 +4,14 @@ import { getCategories } from "../../redux/apis/categoryCallApi";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { selectCategories } from "../../store/seloctors/slectCategories";
-
+import { useNavigate } from "react-router-dom";
 export default function CategoriesMenu() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategories());
   }, []);
   const categories = useSelector(selectCategories);
-
+  const naveTo = useNavigate();
   return (
     <>
       <Stack
@@ -71,7 +71,11 @@ export default function CategoriesMenu() {
         <ul>
           {categories &&
             categories?.map((category) => (
-              <li key={category?._id}>{category?.title}</li>
+              <li
+                onClick={() => naveTo(`category/${category?.title}`)}
+                key={category?._id}>
+                {category?.title}
+              </li>
             ))}
         </ul>
       </Stack>

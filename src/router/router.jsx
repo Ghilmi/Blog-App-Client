@@ -21,6 +21,7 @@ import CommentsDashboard from "../pages/CommentsDashboard/CommentsDashboard";
 import VerfifyctionEmail from "../pages/VerfifyctionEmail/VerfifyctionEmail";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import Category from "../components/category/Category";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +49,7 @@ export const router = createBrowserRouter(
         path="/reset-password/:userId/:token"
         element={<ResetPassword />}
       />
+      <Route path="category/:categoryName" element={<Category />} />
     </Route>
   )
 );

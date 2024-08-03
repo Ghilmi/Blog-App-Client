@@ -16,6 +16,8 @@ export default function Post({ post, width }) {
         sx={{
           "& img": {
             width: "100%",
+            objectFit: "content",
+            aspictRatio: 1,
           },
           px: 2,
           py: 1,
@@ -99,30 +101,14 @@ export default function Post({ post, width }) {
             sx={{
               mt: 1,
               mb: 2,
-              textOverflow: "ellipsis '...' ",
+              textOverflow: "ellipsis  ",
               overflow: "hidden",
               whiteSpace: "nowrap",
               textTransform: "capitalize",
               fontSize: { xs: "0.8rem", sm: "1.2rem" },
             }}
             className="description">
-            {post?.description}.About Baghdad lorem ipsum dolor sit amet
-            consectetur adipisicing elit.About Baghdad lorem ipsum dolor sit
-            amet consectetur adipisicing elit.About Baghdad lorem ipsum dolor
-            sit amet consectetur adipisicing elit.About Baghdad lorem ipsum
-            dolor sit amet consectetur adipisicing elit.About Baghdad lorem
-            ipsum dolor sit amet consectetur adipisicing elit.About Baghdad
-            lorem ipsum dolor sit amet consectetur adipisicing elit.About
-            Baghdad lorem ipsum dolor sit amet consectetur adipisicing
-            elit.About Baghdad lorem ipsum dolor sit amet consectetur
-            adipisicing elit.About Baghdad lorem ipsum dolor sit amet
-            consectetur adipisicing elit.About Baghdad lorem ipsum dolor sit
-            amet consectetur adipisicing elit.About Baghdad lorem ipsum dolor
-            sit amet consectetur adipisicing elit.About Baghdad lorem ipsum
-            dolor sit amet consectetur adipisicing elit.About Baghdad lorem
-            ipsum dolor sit amet consectetur adipisicing elit.About Baghdad
-            lorem ipsum dolor sit amet consectetur adipisicing elit.About
-            Baghdad lorem ipsum dolor sit amet consectetur adipisicing elit.
+            {post?.description}
           </Typography>
 
           <Button
