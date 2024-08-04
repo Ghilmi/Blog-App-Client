@@ -85,7 +85,7 @@ This project is a full-featured blog application developed using the MERN stack 
 
 ## Deployment
 
-The application is deployed on Vercel. You can access it [here](https://blog-app-client-1au3pkpa3-users-projects-c3831f03.vercel.app/).
+The application is deployed on Vercel. You can access it [here](https://blog-app-client-gray.vercel.app/).
 
 ## Contributing
 
