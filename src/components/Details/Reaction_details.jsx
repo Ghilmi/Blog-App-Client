@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   IconButton,
+  Skeleton,
   Stack,
   TextField,
   Typography,
@@ -157,7 +158,11 @@ export default function Reaction_details() {
         </>
       )}
       <Typography variant="h5" sx={{ fontWeight: 600 }}>
-        {post?.comments ? post?.comments.length : 0} Comments:
+        {post ? (
+          `${post?.comments ? post?.comments.length : 0} Comments:`
+        ) : (
+          <Skeleton animation="wave" width={100} />
+        )}
       </Typography>
       <Divider
         variant="fullWidth"

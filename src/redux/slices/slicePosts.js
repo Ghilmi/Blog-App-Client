@@ -28,6 +28,9 @@ export const postSlice = createSlice({
     setNullPosts(state) {
       state.posts = null;
     },
+    resetPost(state) {
+      state.post = null;
+    },
   },
 });
 export const postReducer = postSlice.reducer;

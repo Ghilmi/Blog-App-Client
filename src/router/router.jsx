@@ -22,6 +22,7 @@ import VerfifyctionEmail from "../pages/VerfifyctionEmail/VerfifyctionEmail";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import Category from "../components/category/Category";
+import Search from "./../components/Search/Search";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,6 +51,7 @@ export const router = createBrowserRouter(
         element={<ResetPassword />}
       />
       <Route path="category/:categoryName" element={<Category />} />
+      <Route path="search" element={<Search />} />
     </Route>
   )
 );

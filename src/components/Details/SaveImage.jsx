@@ -12,7 +12,8 @@ import { useEffect, useState } from "react";
 
 export default function SaveImage({ image }) {
   const message = useSelector(selectMessageFromPost);
-  const { token } = useSelector(selectUserFromAuth);
+  const userFromAuth = useSelector(selectUserFromAuth);
+
   const post = useSelector(selectOnePost);
   const dispatch = useDispatch();
   const [temp, setTemp] = useState(false);
@@ -22,7 +23,12 @@ export default function SaveImage({ image }) {
   }, [message]);
   const handelUpload = () => {
     if (image.imageFile)
-      handelUploadImage(image.imageFile, post._id, `Bearer ${token}`, dispatch);
+      handelUploadImage(
+        image.imageFile,
+        post._id,
+        `Bearer ${userFromAuth && userFromAuth?.token}`,
+        dispatch
+      );
   };
 
   return (

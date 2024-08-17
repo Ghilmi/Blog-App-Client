@@ -5,21 +5,18 @@ export const getPosts = (page = null, categoryName = null) => {
   return async (dispatch) => {
     try {
       let data;
-      console.log(categoryName);
       if (categoryName) {
         const { data: temp } = await fetchData.get(
           `api/post?category=${categoryName}`,
           { method: "get" }
         );
         data = temp;
-        console.log(data);
       } else {
         const { data: temp } = await fetchData.get(
           page ? `/api/post?pagination=${page}` : "/api/post",
           { method: "get" }
         );
         data = temp;
-        console.log(data);
       }
 
       dispatch(postActions.setPosts(data));
@@ -44,7 +41,6 @@ export const getCountOfPosts = () => {
 };
 
 export const getOnePost = (id) => {
-  console.log("from fetOnePost");
   return async (dispatch) => {
     try {
       const { data } = await fetchData.get(

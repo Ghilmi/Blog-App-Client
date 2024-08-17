@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Skeleton, Stack, Typography } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
 import { getCategories } from "../../redux/apis/categoryCallApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +30,8 @@ export default function CategoriesMenu() {
             clipPath: "polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%)",
             pr: 4,
             transition: "all 0.3s ease",
+            textOverflow: "ellipsis",
+            witheSpace: "nowrap",
             "&:hover": {
               bgcolor: red[700],
             },
@@ -69,16 +71,22 @@ export default function CategoriesMenu() {
           Ctaegories
         </Typography>
         <ul>
-          {categories &&
-            categories?.map((category) => (
-              <li
-                onClick={() => naveTo(`category/${category?.title}`)}
-                key={category?._id}>
-                {category?.title}
-              </li>
-            ))}
+          {categories
+            ? categories?.map((category) => (
+                <li
+                  onClick={() => naveTo(`category/${category?.title}`)}
+                  key={category?._id}>
+                  {category?.title}
+                </li>
+              ))
+            : arrayCategorySkeleton.map((item, index) => (
+                <li key={index}>
+                  <Skeleton width={80} height={20} />
+                </li>
+              ))}
         </ul>
       </Stack>
     </>
   );
 }
+const arrayCategorySkeleton = new Array(5).fill("");

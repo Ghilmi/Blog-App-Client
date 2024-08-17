@@ -40,13 +40,23 @@ export default function HeaderLeft({ togle, setTogle }) {
               p: 0,
               fontSize: { xs: "1rem", md: "1.5rem" },
               color: "#eee",
-              textDecoration: "underline",
+              textDecoration: "underline 2px",
               border: "none",
               m: 0,
-            }}>
+              "& i": {
+                position: "relative",
+                left: "-10px",
+                bottom: "2.9px",
+              },
+              "&:hover": {
+                textDecoration: "underline 2px",
+              },
+            }}
+            endIcon={<i className="bi bi-pencil-fill" />}
+            onClick={() => naveTo("/")}>
             Blog
           </Button>
-          <i className="bi bi-pencil-fill" />
+
           <IconButton
             sx={{
               Width: "0.5rem",
@@ -90,7 +100,7 @@ export default function HeaderLeft({ togle, setTogle }) {
                 : "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             },
             tansition: "all 0.7s ease-in-out",
-            zIndex: 9,
+            zIndex: 20,
           }}>
           <Button
             onClick={() => {
@@ -108,6 +118,15 @@ export default function HeaderLeft({ togle, setTogle }) {
             startIcon={<i className="bi bi-postcard-heart-fill" />}>
             Posts
           </Button>
+          <Button
+            onClick={() => {
+              handelClick(`/search`);
+            }}
+            variant="text"
+            startIcon={<i className="bi bi-search-heart"></i>}>
+            Search
+          </Button>
+
           {user && (
             <Button
               onClick={() => {

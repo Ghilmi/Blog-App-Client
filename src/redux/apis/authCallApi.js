@@ -3,9 +3,10 @@ import { authActions } from "../slices/sliceAuth.js";
 export const logUser = (user) => {
   return async (dispatch) => {
     try {
-      const { data } = await fetchData.post("/api/auth/loging", user);
+      const { data } = await fetchData.post("/api/auth/login", user);
       dispatch(authActions.setUser(data));
     } catch (error) {
+      console.log(error);
       dispatch({
         type: "auth/setMessage",
         payload: {

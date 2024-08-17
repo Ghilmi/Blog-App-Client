@@ -9,17 +9,18 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
-import { red, yellow } from "@mui/material/colors";
+import { yellow } from "@mui/material/colors";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserFromAuth } from "./../../store/seloctors/selectUserFromAuth";
+import { selectRandomColor } from "../../store/seloctors/selectMode";
 
 export default function HeaderRight({ handelMode, theme }) {
   const user = useSelector(selectUserFromAuth);
-  const navTo = useNavigate(); //
+  const naveTo = useNavigate(); //
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const AvatarColor = useSelector(selectRandomColor);
   const dispatch = useDispatch();
 
   const open = Boolean(anchorEl);
@@ -30,12 +31,12 @@ export default function HeaderRight({ handelMode, theme }) {
     setAnchorEl(null);
   };
   const handelClickOnProfile = () => {
-    if (user) navTo(`/profile/${user.id}`);
+    if (user) naveTo(`/profile/${user.id}`);
     handleClose();
   };
   const handelLogout = () => {
     dispatch({ type: "auth/setUser", payload: null });
-    navTo("/");
+    naveTo("/");
     handleClose();
   };
 
@@ -57,18 +58,6 @@ export default function HeaderRight({ handelMode, theme }) {
             height: "max-content",
           },
         }}>
-        <IconButton
-          sx={{
-            width: "5rem",
-            height: "5rem",
-            "& i::before": {
-              color: red[700],
-              fontSize: "3rem",
-              cursor: "pointer",
-            },
-          }}>
-          <i className="bi bi-search-heart"></i>
-        </IconButton>
         {user ? (
           <>
             <Tooltip title="Account settings">
@@ -80,9 +69,11 @@ export default function HeaderRight({ handelMode, theme }) {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}>
                 <Avatar
-                  src={user && user.profilePhoto.url}
-                  sx={{ width: 32, height: 32 }}>
-                  {user ? user.name[0].toUpperCase() : "?"}
+                  src={user && user?.profilePhoto?.url}
+                  sx={{ width: 32, height: 32, bgcolor: AvatarColor }}>
+                  {user && user != undefined
+                    ? user?.name[0]?.toUpperCase()
+                    : "?"}
                 </Avatar>
               </IconButton>
             </Tooltip>
@@ -137,28 +128,29 @@ export default function HeaderRight({ handelMode, theme }) {
           </>
         ) : (
           <>
-            <Button
-              onClick={() => navTo("/login")}
-              variant="contained"
-              startIcon={<i className="bi bi-journal-check"></i>}>
-              log-in
-            </Button>
-            <Button
-              onClick={() => navTo("/register")}
-              variant="contained"
-              startIcon={<i className="bi bi-person-add"></i>}>
-              Register
-            </Button>
+            <Tooltip title="login">
+              <Button
+                onClick={() => naveTo("/login")}
+                variant="contained"
+                startIcon={<i className="bi bi-journal-check"></i>}></Button>
+            </Tooltip>
+            <Tooltip title="register">
+              <Button
+                onClick={() => naveTo("/register")}
+                variant="contained"
+                startIcon={<i className="bi bi-person-add"></i>}></Button>
+            </Tooltip>
           </>
         )}
 
         <Button
           variant="text"
           sx={{
-            ml: { xs: "5px", md: "10px" },
+            m: 0,
+            ml: { xs: "2px", md: "5px" },
             bgcolor: "#transparent",
             "& i::before": { color: yellow[600] },
-            p: 0,
+            p: "0 !important",
           }}
           onClick={handelMode}>
           {theme?.palette.mode === "dark" ? (

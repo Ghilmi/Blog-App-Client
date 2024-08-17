@@ -19,7 +19,6 @@ export const authSlice = createSlice({
       state.message = action.payload;
     },
     setUserInformation(state, action) {
-      console.log("setUserInformation");
       const payload = {
         ...action.payload,
         token: state.user.token,

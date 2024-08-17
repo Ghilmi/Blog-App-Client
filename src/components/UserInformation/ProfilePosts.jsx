@@ -15,7 +15,8 @@ export default function ProfilePosts({ user, isLoginUser }) {
               fontSize: { xs: "1.5rem", md: "2rem" },
               fontWeight: "bold",
             }}>
-            {user && user.name} Posts
+            {user && `@ ${user.name.toLowerCase()}`} Posts(
+            {user && user.posts.length})
           </Typography>
           <Divider
             sx={{

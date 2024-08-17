@@ -23,6 +23,9 @@ export const userSlice = createSlice({
     setUserProfile(state, action) {
       state.userProfile = action.payload;
     },
+    resetUserProfile(state) {
+      state.userProfile = null;
+    },
   },
 });
 export const userReducer = userSlice.reducer;

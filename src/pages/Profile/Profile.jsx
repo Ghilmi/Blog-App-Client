@@ -18,8 +18,6 @@ export default function Profile() {
   const naveTo = useNavigate();
 
   useEffect(() => {
-    console.log(loginUser?._id);
-    console.log({ userId });
     if (loginUser?._id === userId) {
       dispatch(getUserInformation(user?._id, `Bearer ${user?.token}`));
       setUser(loginUser);
@@ -27,6 +25,9 @@ export default function Profile() {
       dispatch(getUserInformation(userId, null));
       setUser(userProfile);
     }
+    return () => {
+      dispatch({ type: "user/resetUserProfile" });
+    };
   }, [message]);
   useEffect(() => {
     setTimeout(() => {

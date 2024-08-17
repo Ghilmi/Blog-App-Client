@@ -1,8 +1,11 @@
 import {
+  Alert,
   Box,
   Button,
+  Collapse,
   Container,
   FormControl,
+  IconButton,
   Input,
   InputAdornment,
   InputLabel,
@@ -18,6 +21,9 @@ import { useNavigate } from "react-router-dom";
 import { selectUserFromAuth } from "../../store/seloctors/selectUserFromAuth";
 
 export default function Login() {
+  const userMessage = useSelector((state) => state.auth.message);
+  const [open, setOpen] = useState(true);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailValid, setEmailValid] = useState(true);
@@ -25,6 +31,11 @@ export default function Login() {
   const dispatch = useDispatch();
   const naveTo = useNavigate();
   const user = useSelector(selectUserFromAuth);
+
+  useEffect(() => {
+    setOpen(userMessage?.error === true);
+  }, [userMessage]);
+
   useEffect(() => {
     if (user) naveTo("/");
   }, [user]);
@@ -90,6 +101,25 @@ export default function Login() {
             justifyContent: "center",
             mt: 3,
           }}>
+          <Collapse in={open && userMessage?.error}>
+            <Alert
+              variant="outlined"
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}>
+                  <i className="bi bi-x" fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}>
+              {userMessage?.text}
+            </Alert>
+          </Collapse>
           <FormControl variant="standard" sx={{ width: "100%" }}>
             <InputLabel htmlFor="email">
               {emailValid

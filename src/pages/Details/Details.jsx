@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Skeleton, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import Header_Details from "../../components/Details/Header_Details";
@@ -11,8 +11,12 @@ export default function Details() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const post = useSelector(selectOnePost);
+
   useEffect(() => {
     dispatch(getOnePost(id));
+    return () => {
+      dispatch({ type: "post/resetPost" });
+    };
   }, []);
 
   return (
@@ -23,20 +27,11 @@ export default function Details() {
           sx={{ textIndent: "2em", textAlign: "justify" }}
           className="description"
           variant="h6">
-          {post?.description}...lorem ipsum dolor sit amet consectetur
-          adipisicing elit.lorem ipsum dolor sit amet consectetur adipisicing
-          elit. lorem ipsum dolor sit amet consectetur adipisicing elit. lorem
-          ipsum dolor sit amet consectetur adipisicing elit. lorem ipsum dolor
-          sit amet consectetur adipisicing elit.lorem ipsum dolor sit amet
-          consectetur adipisicing elit. lorem ipsum dolor sit amet consectetur
-          adipisicing elit. lorem ipsum dolor sit amet consectetur adipisicing
-          elit. lorem ipsum dolor sit amet consectetur adipisicing elit.lorem
-          ipsum dolor sit amet consectetur adipisicing elit. lorem ipsum dolor
-          sit amet consectetur adipisicing elit. lorem ipsum dolor sit amet
-          consectetur adipisicing elit. lorem ipsum dolor sit amet consectetur
-          adipisicing elit.lorem ipsum dolor sit amet consectetur adipisicing
-          elit. lorem ipsum dolor sit amet consectetur adipisicing elit. lorem
-          ipsum dolor sit amet consectetur adipisicing elit.
+          {post ? (
+            post.description
+          ) : (
+            <Skeleton width="100%" height={400} animation="wave" />
+          )}
         </Typography>
         <Reaction_details post={post} />
       </Container>

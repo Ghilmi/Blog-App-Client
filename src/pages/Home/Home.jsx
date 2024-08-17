@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getPosts } from "../../redux/apis/postCallApi";
 import { selectPosts } from "../../store/seloctors/selectPosts";
+import { postActions } from "../../redux/slices/slicePosts";
 export default function Home() {
   const dispatch = useDispatch();
   const posts = useSelector(selectPosts);
   useEffect(() => {
     dispatch(getPosts());
-    console.log(posts);
-    console.log("posts");
+    return () => {
+      dispatch(postActions.resetPost());
+    };
   }, []);
 
   const message = useSelector((state) => state.auth.message);
