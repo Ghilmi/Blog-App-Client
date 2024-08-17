@@ -1,3 +1,5 @@
+---
+
 # Blog App Client
 
 This repository contains the client-side code for the **Blog App**, a full-featured blogging platform where users can create, view, and manage blog posts, comments, and categories. This project is built using the MERN stack.
