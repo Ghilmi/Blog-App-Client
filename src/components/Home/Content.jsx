@@ -32,7 +32,11 @@ export default function Content({ posts }) {
           <Grid item xs={12} md={9}>
             <ListPosts posts={posts} />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid
+            sx={{ display: { xs: "none", md: "block" } }}
+            item
+            xs={12}
+            md={3}>
             <CategoriesMenu />
           </Grid>
         </Grid>

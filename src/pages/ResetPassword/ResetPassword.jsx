@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { resetPassword, testLink } from "../../redux/apis/passwordCallApi";
 import AlertSuccess from "../../components/Register/AlertSuccess";
+import forget_password from "./../../SVG/forget_password.svg";
 const ResetPassword = () => {
   const { token, userId } = useParams(false);
   const [errorResposnce, setErrorResposnce] = useState();
@@ -68,8 +69,11 @@ const ResetPassword = () => {
           justifyContent: "center",
           alignItems: "center",
         }}>
-        <Typography sx={{ mt: 7 }} variant="h1" color="inhiret">
-          Reset Password
+        <Typography
+          sx={{ mt: 7, display: "flex", alignItems: "center" }}
+          variant="h1"
+          color="inhiret">
+          <img src={forget_password} /> Reset Password
         </Typography>
         <TextField
           id="Email"

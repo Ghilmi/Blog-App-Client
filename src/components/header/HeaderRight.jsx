@@ -2,6 +2,7 @@
 import {
   Avatar,
   Button,
+  Divider,
   IconButton,
   ListItemIcon,
   Menu,
@@ -111,6 +112,8 @@ export default function HeaderRight({ handelMode, theme }) {
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+              <MenuItem>{user?.name}</MenuItem>
+              <Divider variant="middle" />
               <MenuItem onClick={handelClickOnProfile}>
                 <ListItemIcon>
                   <i className="bi bi-person-circle" />
@@ -143,22 +146,25 @@ export default function HeaderRight({ handelMode, theme }) {
           </>
         )}
 
-        <Button
-          variant="text"
-          sx={{
-            m: 0,
-            ml: { xs: "2px", md: "5px" },
-            bgcolor: "#transparent",
-            "& i::before": { color: yellow[600] },
-            p: "0 !important",
-          }}
-          onClick={handelMode}>
-          {theme?.palette.mode === "dark" ? (
-            <i className="bi bi-lightbulb"></i>
-          ) : (
-            <i className="bi bi-lightbulb-fill"></i>
-          )}
-        </Button>
+        <Tooltip
+          title={theme?.palette.mode === "dark" ? "dark mode" : "light mode"}>
+          <Button
+            variant="text"
+            sx={{
+              m: 0,
+              ml: { xs: "2px", md: "5px" },
+              bgcolor: "#transparent",
+              "& i::before": { color: yellow[600] },
+              p: "0 !important",
+            }}
+            onClick={handelMode}>
+            {theme?.palette.mode === "dark" ? (
+              <i className="bi bi-lightbulb"></i>
+            ) : (
+              <i className="bi bi-lightbulb-fill"></i>
+            )}
+          </Button>
+        </Tooltip>
       </Stack>
     </>
   );

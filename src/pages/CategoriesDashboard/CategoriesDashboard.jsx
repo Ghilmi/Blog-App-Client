@@ -18,7 +18,7 @@ const columns = [
 
   {
     field: "title",
-    headerName: "Post Title",
+    headerName: "Title",
     description: "title of post",
     type: "string",
     width: 260,

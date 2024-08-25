@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Stack } from "@mui/material";
+import { Box, Button, IconButton, Stack, Tooltip } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -33,35 +33,37 @@ export default function HeaderLeft({ togle, setTogle }) {
               left: "-2px",
             },
           }}>
-          <Button
-            component="div"
-            variant="text"
-            sx={{
-              p: 0,
-              fontSize: { xs: "1rem", md: "1.5rem" },
-              color: "#eee",
-              textDecoration: "underline 2px",
-              border: "none",
-              m: 0,
-              "& i": {
-                position: "relative",
-                left: "-10px",
-                bottom: "2.9px",
-              },
-              "&:hover": {
+          <Tooltip title="Home">
+            <Button
+              component="div"
+              variant="text"
+              sx={{
+                p: 0,
+                fontSize: { xs: "1rem", md: "1.5rem" },
+                color: "#eee",
                 textDecoration: "underline 2px",
-              },
-            }}
-            endIcon={<i className="bi bi-pencil-fill" />}
-            onClick={() => naveTo("/")}>
-            Blog
-          </Button>
+                border: "none",
+                m: 0,
+                "& i": {
+                  position: "relative",
+                  left: "-10px",
+                  bottom: "2.9px",
+                },
+                "&:hover": {
+                  textDecoration: "underline 2px",
+                },
+              }}
+              endIcon={<i className="bi bi-pencil-fill" />}
+              onClick={() => naveTo("/")}>
+              Blog
+            </Button>
+          </Tooltip>
 
           <IconButton
             sx={{
               Width: "0.5rem",
               left: "0.5rem",
-              display: { xs: "inline-flex", md: "none" },
+              display: { xs: "none", sm: "inline-flex", md: "none" },
             }}
             onClick={() => setTogle((prev) => !prev)}>
             {togle ? (
@@ -102,53 +104,63 @@ export default function HeaderLeft({ togle, setTogle }) {
             tansition: "all 0.7s ease-in-out",
             zIndex: 20,
           }}>
-          <Button
-            onClick={() => {
-              handelClick("/");
-            }}
-            variant="text"
-            startIcon={<i className="bi bi-house" />}>
-            Home
-          </Button>
-          <Button
-            onClick={() => {
-              handelClick("/posts");
-            }}
-            variant="text"
-            startIcon={<i className="bi bi-postcard-heart-fill" />}>
-            Posts
-          </Button>
-          <Button
-            onClick={() => {
-              handelClick(`/search`);
-            }}
-            variant="text"
-            startIcon={<i className="bi bi-search-heart"></i>}>
-            Search
-          </Button>
+          <Tooltip title="Home">
+            <Button
+              onClick={() => {
+                handelClick("/");
+              }}
+              variant="text"
+              startIcon={<i className="bi bi-house" />}>
+              Home
+            </Button>
+          </Tooltip>
+          <Tooltip title="All last Posts">
+            <Button
+              onClick={() => {
+                handelClick("/posts");
+              }}
+              variant="text"
+              startIcon={<i className="bi bi-postcard-heart-fill" />}>
+              Posts
+            </Button>
+          </Tooltip>
+          <Tooltip title="Search On Your Post">
+            <Button
+              onClick={() => {
+                handelClick(`/search`);
+              }}
+              variant="text"
+              startIcon={<i className="bi bi-search-heart"></i>}>
+              Search
+            </Button>
+          </Tooltip>
 
           {user && (
-            <Button
-              onClick={() => {
-                handelClick("/create");
-              }}
-              variant="text"
-              startIcon={<i className="bi bi-file-earmark-plus" />}>
-              Create
-            </Button>
+            <Tooltip title="Create New Post">
+              <Button
+                onClick={() => {
+                  handelClick("/create");
+                }}
+                variant="text"
+                startIcon={<i className="bi bi-file-earmark-plus" />}>
+                Create
+              </Button>
+            </Tooltip>
           )}
           {user?.isAdmin && (
-            <Button
-              onClick={() => {
-                handelClick("/admin-dashbord");
-              }}
-              sx={{
-                flexWrap: "nowrap",
-              }}
-              variant="text"
-              startIcon={<i className="bi bi-file-earmark-spreadsheet" />}>
-              Admin Dashboard
-            </Button>
+            <Tooltip title="Admin Panel">
+              <Button
+                onClick={() => {
+                  handelClick("/admin-dashbord");
+                }}
+                sx={{
+                  flexWrap: "nowrap",
+                }}
+                variant="text"
+                startIcon={<i className="bi bi-file-earmark-spreadsheet" />}>
+                Admin Dashboard
+              </Button>
+            </Tooltip>
           )}
         </Stack>
       </Stack>

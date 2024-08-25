@@ -65,7 +65,6 @@ export default function Reaction_details() {
     console.log(category);
     if (post?.id && user?.token)
       dispatch(UpdatePost(data, post?._id, `Bearer ${user?.token}`));
-    console.log({ id: post?.id, token: user?.token });
 
     handleClose();
   };
@@ -90,7 +89,7 @@ export default function Reaction_details() {
   // Convert the date to ISO string format
   return (
     <>
-      {user?._id === post?.user?.id && (
+      {user?._id === post?.user?.id ? (
         <Stack>
           <Likes post={post && post} />
           <Box>
@@ -132,6 +131,8 @@ export default function Reaction_details() {
             <RemovePost />
           </Box>
         </Stack>
+      ) : (
+        user && <Likes post={post && post} />
       )}
       {user && (
         <>

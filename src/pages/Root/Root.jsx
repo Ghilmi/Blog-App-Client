@@ -1,8 +1,10 @@
 //import { CssBaseline, ThemeProvider} from "@mui/material";
 import { Box, Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Header from "../header/Header.jsx";
 import { blue } from "@mui/material/colors";
+import MainHeader from "../header/Header.jsx";
+import CategoriesSpeedDial from "../SpeedDial/SpeedDial";
+import LabelBottomNavigation from "../BottomNavigation/BottomNavigation.jsx";
 
 const Root = () => {
   return (
@@ -13,10 +15,18 @@ const Root = () => {
           bgcolor: blue[700],
         },
       }}>
-      <Header />
+      <MainHeader />
 
-      <Box>
+      <Box
+        sx={{
+          position: "relative",
+          "& .css-1k0kull": {
+            height: "auto !important",
+          },
+        }}>
         <Outlet />
+        <CategoriesSpeedDial />
+        <LabelBottomNavigation />
       </Box>
       <footer>
         <Typography

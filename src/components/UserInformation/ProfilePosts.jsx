@@ -3,8 +3,11 @@ import { Container, Divider, Stack, Typography } from "@mui/material";
 import ListPosts from "../../components/Home/ListPosts";
 import { grey } from "@mui/material/colors";
 import Delete from "./Delete";
+import { useSelector } from "react-redux";
+import { selectUserProfile } from "../../store/seloctors/selectUser";
 
 export default function ProfilePosts({ user, isLoginUser }) {
+  const auther = useSelector(selectUserProfile);
   return (
     <>
       <Container className="posts">
@@ -15,8 +18,11 @@ export default function ProfilePosts({ user, isLoginUser }) {
               fontSize: { xs: "1.5rem", md: "2rem" },
               fontWeight: "bold",
             }}>
-            {user && `@ ${user.name.toLowerCase()}`} Posts(
-            {user && user.posts.length})
+            {isLoginUser
+              ? `@${user?.name.toLowerCase()}      `
+              : `@${auther?.name.toLowerCase()}    `}{" "}
+            Posts(
+            {isLoginUser ? user?.posts.length : auther?.posts.length})
           </Typography>
           <Divider
             sx={{
@@ -35,8 +41,15 @@ export default function ProfilePosts({ user, isLoginUser }) {
             gap: 2,
             flexDirection: "column",
             my: 2,
+            "& .postsList": {
+              flexDirection: "coloumn-reverse !important",
+            },
           }}>
-          <ListPosts mode="profile" posts={user && user.posts} />
+          <ListPosts
+            mode="profile"
+            posts={isLoginUser ? user?.posts : auther?.posts}
+            user={isLoginUser ? user : auther}
+          />
         </Stack>
         {isLoginUser && <Delete user={user} message="Profile" />}
       </Container>

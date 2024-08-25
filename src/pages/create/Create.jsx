@@ -1,6 +1,6 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { blue } from "@mui/material/colors";
+import { blue, grey } from "@mui/material/colors";
 import CreateForme from "../../components/CreateForme/CreateForme";
 import CreatePostButton from "../../components/Details/CreatePostButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { getCategories } from "../../redux/apis/categoryCallApi";
 import { selectCategories } from "../../store/seloctors/slectCategories";
 import { selectUserFromAuth } from "../../store/seloctors/selectUserFromAuth";
 import { useNavigate } from "react-router-dom";
-
+import imgIcon from "../../../public/images/img-icon.jpg";
 export default function Create() {
   const [image, setImage] = useState({ url: null, file: null });
   //inputs statuts
@@ -69,26 +69,44 @@ export default function Create() {
             alignItems: "center",
             flexDirection: "row",
             gap: 1,
-            "& img": {
+            "& .containerImage": {
+              transition: "all 0.5s",
+              border: "1px solid #000",
               width: "100px",
               height: "100px",
+              backgroundImage: `url(${imgIcon})`,
+              backgroundColor: "#fff",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            },
+            "& img": {
+              width: "100%",
+              height: "100%",
               objectFit: "cover",
               objectPosition: "center",
               opacity: image.url ? 1 : 0,
               transition: "all 0.5s",
-              border: "1px solid #000",
             },
           }}>
-          <label htmlFor="contained-button-file">
-            <i className="bi bi-upload" /> Choose Image
-          </label>
+          <Stack>
+            <label htmlFor="contained-button-file">
+              <i className="bi bi-upload" />{" "}
+              {!image.url ? "Choose Image" : "Replace"}
+            </label>
+            <Typography variant="caption" color={grey[300]}>
+              Please chose picture , only type image, max size 3mb..
+            </Typography>
+          </Stack>
           <input
             onChange={handelChangeImage}
             accept="image/*"
             id="contained-button-file"
             type="file"
           />
-          <img src={image.url} />
+          <div className="containerImage">
+            <img src={image.url} />
+          </div>
         </Stack>
         <CreatePostButton
           image={image.file ? image.file : null}

@@ -13,11 +13,10 @@ export default function Category() {
 
   useEffect(() => {
     dispatch(getPosts(null, categoryName));
-
     return () => {
       dispatch({ type: "post/setNullPosts" });
     };
-  }, []);
+  }, [categoryName]);
 
   return (
     <Box sx={{ minHeight: "95vh" }}>

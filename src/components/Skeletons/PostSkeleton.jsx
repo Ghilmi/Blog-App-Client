@@ -57,9 +57,19 @@ export default function PostSkeleton() {
               <i className="bi bi-info-circle"></i>
             </IconButton>
           </Stack>
-          <Typography variant="caption" sx={{ opacity: 0.6 }} color="initial">
-            <Skeleton />
-          </Typography>
+          <Stack flexDirection={"row"}>
+            <Skeleton
+              variant="circular"
+              sx={{
+                width: 20,
+                height: 20,
+                mr: 0.5,
+              }}
+            />
+            <Typography variant="caption" sx={{ opacity: 0.6 }} color="initial">
+              <Skeleton width={20} />
+            </Typography>
+          </Stack>
           <Typography
             sx={{
               mt: 1,
@@ -87,6 +97,23 @@ export default function PostSkeleton() {
             </Typography>
           </Stack>
         </Box>
+        <Typography
+          sx={{
+            position: "absolute",
+            top: "10px",
+            right: "14px",
+            zIndex: 30,
+
+            py: 0.5,
+            px: 1,
+            fontWeight: 700,
+            borderRadius: 1,
+            borderStyle: "solid",
+          }}
+          variant="caption"
+          color="initial">
+          <Skeleton width={20} />
+        </Typography>
       </Stack>
     </>
   );

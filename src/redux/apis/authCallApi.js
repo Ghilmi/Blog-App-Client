@@ -21,12 +21,32 @@ export const logUser = (user) => {
   };
 };
 
-export const registerUser = async (user) => {
+export const registerUser = async (user, dispatch) => {
   try {
     const { data } = await fetchData.post("/api/auth/regester", user);
+    console.log({ data });
+    dispatch({
+      type: "auth/setMessage",
+      payload: {
+        text: data.message || " successfully register!",
+        error: false,
+        rendom: Math.random(),
+      },
+    });
     return data;
   } catch (error) {
-    return error.response.data;
+    dispatch({
+      type: "auth/setMessage",
+      payload: {
+        text:
+          error.response.data.Error_Message ||
+          "Invalide data, your log-in wase not successfully!",
+        error: true,
+        rendom: Math.random(),
+      },
+    });
+    console.log(error);
+    return { ...error.response.data, error: true };
   }
 };
 

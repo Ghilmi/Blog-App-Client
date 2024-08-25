@@ -11,7 +11,6 @@ export const searchSlice = createSlice({
     setState(state, action) {
       state = action.payload.posts;
 
-      console.log(action.payload);
       return state;
     },
     resetState(state) {

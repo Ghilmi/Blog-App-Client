@@ -24,7 +24,7 @@ export default function Details() {
       <Container>
         <Header_Details post={post} />
         <Typography
-          sx={{ textIndent: "2em", textAlign: "justify" }}
+          sx={{ textIndent: "2em", textAlign: "justify", mb: 3 }}
           className="description"
           variant="h6">
           {post ? (

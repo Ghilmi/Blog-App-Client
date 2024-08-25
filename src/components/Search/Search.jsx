@@ -10,6 +10,7 @@ import {
   Paper,
   Tooltip,
   Skeleton,
+  Typography,
 } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -19,7 +20,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/apis/categoryCallApi";
 import { selectCategories } from "../../store/seloctors/slectCategories";
-import { blue, grey } from "@mui/material/colors";
+import { blue, grey, yellow } from "@mui/material/colors";
 import { fetchPostsOnsearch } from "../../redux/apis/searchApi";
 import { searchActions } from "../../redux/slices/sliceSearch";
 import { selectPostsOnSearch } from "../../store/seloctors/selectPostOnSearch";
@@ -38,10 +39,11 @@ export default function Search() {
 
   useEffect(() => {
     dispatch(getCategories());
+    return () => {
+      dispatch({ type: "category/reset" });
+    };
   }, []);
-  useEffect(() => {
-    console.log(postsOfSearch);
-  }, [postsOfSearch]);
+
   const [categoriesRequist, setCategoriesRequist] = useState(null);
   useEffect(() => {
     setCategoriesRequist(categories?.map((item) => item.title)?.join(","));
@@ -63,7 +65,6 @@ export default function Search() {
   useEffect(() => {
     setSearchButton(false);
     dispatch(fetchPostsOnsearch(serchbarValue, alignment, categoriesRequist));
-
     return () => {
       dispatch(searchActions.resetState());
       setSearchButton(false);
@@ -96,22 +97,22 @@ export default function Search() {
         return item;
       }
     });
-    if (event.target.checked) {
+    setChecked(temp);
+    if (event.target.checked === true) {
       setCategoriesRequist((prev) => prev + `,${title}`);
-    } else {
+    } else if (event.target.checked === false) {
       setCategoriesRequist((prev) => {
-        let temp = prev?.split(",");
-        const indexOfArry = temp.indexOf(title);
+        prev = prev?.split(",");
+        const indexOfArry = prev.indexOf(title);
         if (indexOfArry !== -1) {
-          temp.splice(index, 1);
-          temp = temp.join(",");
+          prev.splice(indexOfArry, 1);
+          prev = prev.join(",");
         } else {
           console.log("error '-1'");
         }
-        return temp;
+        return prev;
       });
     }
-    setChecked(temp);
   };
   const handelChangeAll = (event) => {
     setChecked(
@@ -122,6 +123,7 @@ export default function Search() {
     } else {
       setCategoriesRequist("");
     }
+    console.log({ checked });
   };
 
   //function to handel search bar:start
@@ -161,23 +163,25 @@ export default function Search() {
                   gap: 1,
                   width: "100%",
                 }}>
-                <IconButton
-                  sx={{
-                    width: { xs: "20px", sm: "30px", md: "40px" },
-                    height: { xs: "20px", sm: "30px", md: "40px" },
-                    bgcolor: blue[200],
-                    border: "1px solid " + blue[400],
-                    "& i": {
-                      color: grey[300],
-                      fontSize: { xs: "9px", sm: "16px", md: "20px" },
-                      "&:hover": {
-                        color: blue[900],
+                <Tooltip title="Search..">
+                  <IconButton
+                    sx={{
+                      width: { xs: "20px", sm: "30px", md: "40px" },
+                      height: { xs: "20px", sm: "30px", md: "40px" },
+                      bgcolor: blue[200],
+                      border: "1px solid " + blue[400],
+                      "& i": {
+                        color: grey[300],
+                        fontSize: { xs: "9px", sm: "16px", md: "20px" },
+                        "&:hover": {
+                          color: blue[900],
+                        },
                       },
-                    },
-                  }}
-                  onClick={() => setSearchButton(true)}>
-                  <i className="bi bi-search"></i>
-                </IconButton>
+                    }}
+                    onClick={() => setSearchButton(true)}>
+                    <i className="bi bi-search"></i>
+                  </IconButton>
+                </Tooltip>
                 <TextField
                   fullWidth={true}
                   onChange={handelSearchbar}
@@ -229,11 +233,18 @@ export default function Search() {
                       p: { xs: "5px", sm: "8px" },
                     },
                   }}>
-                  <ToggleButton value="likes">Popular</ToggleButton>
-                  <ToggleButton defaultChecked={true} value="createdAt">
-                    New
-                  </ToggleButton>
-                  <ToggleButton value="title">Title</ToggleButton>
+                  <Tooltip title="Order By : Popular">
+                    <ToggleButton value="likes">Popular</ToggleButton>
+                  </Tooltip>
+                  <Tooltip title="Order By : Date">
+                    <ToggleButton defaultChecked={true} value="createdAt">
+                      New
+                    </ToggleButton>
+                  </Tooltip>
+
+                  <Tooltip title="Order By : Title">
+                    <ToggleButton value="title">Title</ToggleButton>
+                  </Tooltip>
                 </ToggleButtonGroup>
               </Stack>
             </Stack>
@@ -253,6 +264,7 @@ export default function Search() {
                           sm: "160px !important",
                           md: "200px !important",
                         },
+                        position: "relative",
                       }}
                       key={index}>
                       <img
@@ -277,7 +289,14 @@ export default function Search() {
                         title={item?.title}
                         subtitle={`@ ${item?.user.name}`}
                         actionIcon={
-                          <Tooltip title="Red More...">
+                          <Tooltip
+                            title={
+                              item?.description?.slice(0, 500) +
+                              (item?.description?.slice(0, 500) ===
+                              item?.description
+                                ? ""
+                                : "...")
+                            }>
                             <IconButton
                               onClick={() => {
                                 naveTo(`/post/details/${item?._id}`);
@@ -292,6 +311,25 @@ export default function Search() {
                           </Tooltip>
                         }
                       />
+                      <Typography
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "14px",
+                          zIndex: 30,
+                          backgroundColor: yellow[700],
+                          py: 0.5,
+                          px: 1,
+                          fontWeight: 700,
+                          borderRadius: 1,
+                          border: "solid 2px",
+                          borderColor: grey[200],
+                          fontSize: 8,
+                        }}
+                        variant="caption"
+                        color="initial">
+                        {item.category?.title || item?.category}
+                      </Typography>
                     </ImageListItem>
                   ))
                 : [1, 2, 3, 4, 5].map((item, index) => (
@@ -314,9 +352,13 @@ export default function Search() {
               label="All"
               control={
                 <Checkbox
-                  checked={JSON.stringify(checked) === JSON.stringify(checked)}
+                  checked={
+                    JSON.stringify(checked) ===
+                    JSON.stringify(new Array(checked.length).fill(true))
+                  }
                   indeterminate={
-                    JSON.stringify(checked) !== JSON.stringify(checked)
+                    JSON.stringify(checked) !==
+                    JSON.stringify(new Array(checked.length).fill(true))
                   }
                   onChange={handelChangeAll}
                   disabled={categories ? false : true}

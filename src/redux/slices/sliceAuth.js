@@ -30,6 +30,13 @@ export const authSlice = createSlice({
       localStorage.removeItem("user");
       state.user = null;
     },
+    resetMessage(state) {
+      state.message = {
+        text: null,
+        error: false,
+        inLoading: null,
+      };
+    },
     verifyAccount(state) {
       state.isVerifyAccount = true;
     },

@@ -22,6 +22,17 @@ export const categorySlice = createSlice({
     setMessage(state, action) {
       state.message = action.payload;
     },
+    reset(state) {
+      state = {
+        categories: localStorage.getItem("category") || null,
+        count: null,
+        message: {
+          inLoading: false,
+          error: false,
+        },
+      };
+      return state;
+    },
   },
 });
 export const categoryReducer = categorySlice.reducer;

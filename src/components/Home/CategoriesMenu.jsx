@@ -32,6 +32,7 @@ export default function CategoriesMenu() {
             transition: "all 0.3s ease",
             textOverflow: "ellipsis",
             witheSpace: "nowrap",
+            width: { xs: "200px", md: "100%" },
             "&:hover": {
               bgcolor: red[700],
             },
@@ -52,21 +53,24 @@ export default function CategoriesMenu() {
           },
           "& ul": { width: "100%", px: 4 },
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: { xs: "start", md: "center" },
           bgcolor: "#eee",
-          px: 3,
+          px: { sx: 3, md: 0 },
           py: 1,
           height: "max-content",
-          width: "100%",
+          width: { xs: "max-content", md: "100%" },
+          mb: { xs: 2, md: 0 },
+          pr: { xs: 4, md: 0 },
         }}>
         <Typography
           variant="h4"
           sx={{
-            textAlign: "center",
+            textAlign: { xs: "start", md: "center" },
             borderBottom: "1px solid black",
             borderTop: "1px solid black",
             fontWeight: 600,
             mb: 3,
+            ml: { xs: 4, md: 0 },
           }}>
           Ctaegories
         </Typography>
@@ -74,7 +78,7 @@ export default function CategoriesMenu() {
           {categories
             ? categories?.map((category) => (
                 <li
-                  onClick={() => naveTo(`category/${category?.title}`)}
+                  onClick={() => naveTo(`/category/${category?.title}`)}
                   key={category?._id}>
                   {category?.title}
                 </li>

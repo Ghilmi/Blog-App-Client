@@ -1,10 +1,22 @@
 /* eslint-disable react/prop-types */
-import { Box, IconButton, Stack, Typography, Tooltip } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Stack,
+  Typography,
+  Tooltip,
+  Avatar,
+} from "@mui/material";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import Likes from "../Details/Likes";
+import { grey, yellow } from "@mui/material/colors";
+import { useSelector } from "react-redux";
+import { selectUserFromAuth } from "../../store/seloctors/selectUserFromAuth";
 
 // eslint-disable-next-line react/prop-types
 export default function Post({ post }) {
+  const user = useSelector(selectUserFromAuth);
   const naveTo = useNavigate();
   const handelRedMore = () => {
     naveTo(`/post/details/${post?._id}`);
@@ -66,7 +78,7 @@ export default function Post({ post }) {
             className="title">
             {post?.title}
           </Typography>
-          <Tooltip title="Red More...">
+          <Tooltip title={post ? post?.description : "ride more..."}>
             <IconButton
               onClick={handelRedMore}
               sx={{
@@ -78,13 +90,28 @@ export default function Post({ post }) {
             </IconButton>
           </Tooltip>
         </Stack>
-        <Typography
-          onClick={handelNaveToUserProfile}
-          variant="caption"
-          sx={{ opacity: 0.6, cursor: "pointer" }}
-          color="initial">
-          @ {` ${post?.user.name}`}
-        </Typography>
+        <Stack flexDirection={"row"}>
+          <Avatar
+            onClick={handelNaveToUserProfile}
+            sx={{
+              width: 20,
+              height: 20,
+              cursor: "pointer",
+              mr: 0.5,
+              fontSize: "9px",
+            }}
+            alt={"user :" + post && post?.user.name}
+            src={post && post?.user?.profilePhoto?.url}>
+            {post && post?.user.name[0].toUpperCase()}
+          </Avatar>
+          <Typography
+            onClick={handelNaveToUserProfile}
+            variant="caption"
+            sx={{ opacity: 0.6, cursor: "pointer" }}
+            color="initial">
+            {` @${post?.user.name}`}
+          </Typography>
+        </Stack>
         <Typography
           sx={{
             mt: 1,
@@ -108,18 +135,32 @@ export default function Post({ post }) {
             justifyContent: "space-between",
             alignItems: "center",
           }}>
-          <Typography
-            variant="caption"
-            sx={{ opacity: 0.6 }}
-            color="initial">{`${post.likes?.length} like${
-            post.likes?.length > 1 ? "s" : ""
-          }`}</Typography>
           <Typography variant="caption" sx={{ opacity: 0.6 }} color="initial">
             in{" "}
             {` ${post?.user && moment(post?.createdAt).format("MMM DD ,YYYY")}`}
           </Typography>
+          {user?._id && <Likes post={post && post} />}
         </Stack>
       </Box>
+      <Typography
+        sx={{
+          position: "absolute",
+          top: "10px",
+          right: "14px",
+          zIndex: 30,
+          backgroundColor: yellow[700],
+          py: 0.5,
+          px: 1,
+          fontWeight: 700,
+          borderRadius: 1,
+          border: "solid 2px",
+          borderColor: grey[200],
+          fontSize: 8,
+        }}
+        variant="caption"
+        color="initial">
+        {post.category?.title || post?.category}
+      </Typography>
     </Stack>
   );
 }

@@ -37,7 +37,7 @@ export default function Posts() {
           <Pagination
             variant="outlined"
             color="primary"
-            count={countOfPosts ? Math.ceil(+countOfPosts / 3) : 0}
+            count={countOfPosts ? Math.ceil(+countOfPosts / 6) : 0}
             page={page}
             onChange={handleChange}
           />

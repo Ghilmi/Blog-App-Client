@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import HeaderLeft from "../../components/header/HeaderLeft";
 import HeaderRight from "../../components/header/HeaderRight";
+import { Slide } from "@mui/material";
 
-export default function Header() {
+function Header() {
   const [togle, setTogle] = useState(false);
   // mange display items
   const handelTogle = () => {
@@ -46,5 +47,29 @@ export default function Header() {
         <HeaderRight handelMode={handelMode} theme={theme} />
       </Container>
     </Stack>
+  );
+}
+
+export default function MainHeader() {
+  const [show, setShow] = useState(false);
+  document.body.onscroll = (e) => {
+    setShow(e.currentTarget.scrollY > 500);
+  };
+  return (
+    <>
+      <Slide direction="down" in={show}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+          }}>
+          <Header />
+        </div>
+      </Slide>
+      <Header />
+    </>
   );
 }

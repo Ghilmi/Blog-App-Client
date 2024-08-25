@@ -1,22 +1,25 @@
 import { fetchData } from "../../fetche/fetch";
 import { postActions } from "../slices/slicePosts";
 
-export const getPosts = (page = null, categoryName = null) => {
+export const getPosts = (page = null, categoryName = null, length) => {
   return async (dispatch) => {
     try {
       let data;
       if (categoryName) {
         const { data: temp } = await fetchData.get(
-          `api/post?category=${categoryName}`,
+          `api/post/search?categories=${categoryName}`,
           { method: "get" }
         );
-        data = temp;
+
+        data = temp?.posts;
       } else {
         const { data: temp } = await fetchData.get(
-          page ? `/api/post?pagination=${page}` : "/api/post",
+          page
+            ? `/api/post/search?page=${page}&limite=${6}`
+            : "/api/post/search",
           { method: "get" }
         );
-        data = temp;
+        data = temp?.posts;
       }
 
       dispatch(postActions.setPosts(data));
@@ -79,7 +82,6 @@ export const createPost = (
     category && dataform.append("category", category);
 
     try {
-      console.log("from dispatch");
       const { data } = await fetchData.post(`/api/post/${userId}`, dataform, {
         headers: { authorization },
       });
@@ -104,9 +106,9 @@ export const createPost = (
   };
 };
 
-export const handelLike = async (postId, authorization, dispatch) => {
+export const handelLike = async (postId, authorization) => {
   try {
-    await fetchData.put(
+    const { data } = await fetchData.put(
       `/api/post/like/${postId}`,
       {},
       {
@@ -115,16 +117,14 @@ export const handelLike = async (postId, authorization, dispatch) => {
         },
       }
     );
-    dispatch(getOnePost(postId));
-    console.log({ authorization });
+    // dispatch(getOnePost(postId));
+    return data;
   } catch (error) {
-    console.log({ authorization });
     console.log(error);
   }
 };
 
 export const UpdatePost = (data, id, authorization) => {
-  console.log(authorization);
   return async (dispatch) => {
     dispatch({
       type: "post/setMessage",
@@ -172,14 +172,13 @@ export const handelUploadImage = async (
         },
       }
     );
-    console.log({ succes: data });
+
     dispatch(getOnePost(postId));
     dispatch({
       type: "post/setMessage",
       payload: { inLoading: false, error: false },
     });
   } catch (error) {
-    console.log({ postId, image });
     console.log(error);
     dispatch({
       type: "post/setMessage",

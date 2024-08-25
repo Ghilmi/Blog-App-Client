@@ -14,13 +14,13 @@ export default function Home() {
     dispatch(getPosts());
     return () => {
       dispatch(postActions.resetPost());
+      dispatch({ type: "post/resetPost" });
     };
   }, []);
 
   const message = useSelector((state) => state.auth.message);
   useEffect(() => {
     handleClick();
-    console.log(posts);
     return () => {
       handleClose();
       dispatch({

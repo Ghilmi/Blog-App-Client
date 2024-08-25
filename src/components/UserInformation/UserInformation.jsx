@@ -15,10 +15,12 @@ import moment from "moment/moment.js";
 import UploadPhotoButton from "./UploadPhotoButton";
 import { useSelector } from "react-redux";
 import { selectRandomColor } from "../../store/seloctors/selectMode";
+import { selectUserProfile } from "../../store/seloctors/selectUser";
 // eslint-disable-next-line react/prop-types
 export default function UserInformation({ user, isLoginUser = null }) {
   const [avatar, setAvatar] = useState({ url: null, file: null });
   const AvatarColor = useSelector(selectRandomColor);
+  const auther = useSelector(selectUserProfile);
   //
   const handelAvatar = (e) => {
     if (e.target.files[0] && user) {
@@ -44,6 +46,7 @@ export default function UserInformation({ user, isLoginUser = null }) {
           alignItems: "center",
           justifyContent: "center",
           gap: 2,
+          border: "1px solid",
         }}>
         <Stack
           sx={{
@@ -59,7 +62,7 @@ export default function UserInformation({ user, isLoginUser = null }) {
               cursor: "pointer",
             },
           }}>
-          {user ? (
+          {user || auther ? (
             isLoginUser ? (
               <>
                 <Badge
@@ -112,13 +115,17 @@ export default function UserInformation({ user, isLoginUser = null }) {
               </>
             ) : (
               <Avatar
-                alt={user ? user?.name.toUpperCase() : "?"}
+                alt={auther ? auther?.name.toUpperCase() : "?"}
                 // eslint-disable-next-line react/prop-types
-                src={avatar.url ? avatar.url : user && user?.profilePhoto?.url}
+                src={
+                  avatar.url ? avatar.url : auther && auther?.profilePhoto?.url
+                }
                 sx={{
                   width: { xs: 70, md: 100 },
                   height: { xs: 70, md: 100 },
-                  bgcolor: AvatarColor,
+                  bgcolor: `#${(Math.random() * 0xfffff * 1000000)
+                    .toString(16)
+                    .slice(0, 6)}`,
                   fontSize: "3rem",
                 }}
               />
@@ -141,8 +148,12 @@ export default function UserInformation({ user, isLoginUser = null }) {
             fontSize: { xs: "1.4rem", sm: "3rem" },
           }}
           className="name">
-          {user ? (
-            user?.name
+          {user || auther ? (
+            isLoginUser ? (
+              user?.name
+            ) : (
+              auther?.name
+            )
           ) : (
             <Skeleton sx={{ bgcolor: grey[100] }} width={100} />
           )}
@@ -153,9 +164,13 @@ export default function UserInformation({ user, isLoginUser = null }) {
             fontSize: { xs: "0.8rem", sm: "1rem" },
             minHeight: 20,
           }}
-          className="bio">
-          {user ? (
-            user?.bio
+          className="status">
+          {user || auther ? (
+            isLoginUser ? (
+              user?.status
+            ) : (
+              auther?.status
+            )
           ) : (
             <Skeleton sx={{ bgcolor: grey[100] }} height={20} width={200} />
           )}
@@ -166,19 +181,29 @@ export default function UserInformation({ user, isLoginUser = null }) {
             fontSize: { xs: "0.6rem", sm: "0.8rem" },
             fontWeight: 700,
             "& span": { color: green[300] },
+            opacity: 0.4,
           }}
           className="Date">
           Date Joined:{" "}
           <span>
-            {user ? (
-              moment(user.createdAt).format("MMM DD ,YYYY")
+            {user || auther?.name ? (
+              isLoginUser ? (
+                moment(user && user?.createdAt).format("MMM DD ,YYYY")
+              ) : (
+                moment(auther && auther?.createdAt).format("MMM DD ,YYYY")
+              )
             ) : (
               <Skeleton width={60} sx={{ bgcolor: grey[100] }} />
             )}
           </span>
         </Typography>
         {isLoginUser && (
-          <UpdateProfile userId={user && user._id} token={user && user.token} />
+          <UpdateProfile
+            user={user}
+            userId={user && user._id}
+            token={user && user.token}
+            setAvatar={setAvatar}
+          />
         )}
       </Container>
     </>

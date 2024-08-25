@@ -5,7 +5,7 @@ export const updateProfile = async (
   userId,
   name,
   password,
-  bio,
+  status,
   authorization,
   dispatch
 ) => {
@@ -21,7 +21,7 @@ export const updateProfile = async (
     let dataToUpdate = {};
     if (name) dataToUpdate.name = name;
     if (password) dataToUpdate.password = password;
-    if (bio) dataToUpdate.bio = bio;
+    if (status) dataToUpdate.status = status;
     console.log(dataToUpdate);
     const { data } = await fetchData.put(`/api/user/${userId}`, dataToUpdate, {
       headers: { authorization },
@@ -34,7 +34,6 @@ export const updateProfile = async (
         error: false,
       },
     });
-    console.log(data);
   } catch (error) {
     dispatch({
       type: "user/setMessage",
@@ -43,6 +42,7 @@ export const updateProfile = async (
         error: true,
       },
     });
+    console.log(error);
   }
 };
 
@@ -87,6 +87,7 @@ export const getUserInformation = (userId, authorization = null) => {
       });
       if (authorization) dispatch(authActions.setUserInformation(data));
       else dispatch(userActions.setUserProfile(data));
+      console.log(data);
     } catch (error) {
       console.log(error);
     }

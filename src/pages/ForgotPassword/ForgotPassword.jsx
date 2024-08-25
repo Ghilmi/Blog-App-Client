@@ -2,7 +2,7 @@ import { Box, Container, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import AlertSuccess from "../../components/Register/AlertSuccess";
 import { handelSendResetPassword } from "../../redux/apis/passwordCallApi";
-
+import forget_password from "./../../SVG/forget_password.svg";
 const ForgotPassword = () => {
   const [email, setEmail] = useState();
   const [errorEmail, setErrorEmail] = useState(false);
@@ -42,7 +42,11 @@ const ForgotPassword = () => {
           justifyContent: "center",
           alignItems: "center",
         }}>
-        <Typography sx={{ mt: 7 }} variant="h1" color="inhiret">
+        <Typography
+          sx={{ mt: 7, display: "flex", alignItems: "center" }}
+          variant="h4"
+          color="inhiret">
+          <img src={forget_password} />
           Forgot Password
         </Typography>
         <TextField
@@ -70,7 +74,7 @@ const ForgotPassword = () => {
       <AlertSuccess
         handleClose={handleClose}
         open={open}
-        message="Plese chek your Email and flow the nest steps!!"
+        message="Plese chek your Email and flow the next steps!!"
         error={resError}
       />
     </Box>

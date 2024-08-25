@@ -34,7 +34,7 @@ export const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/profile/:id" element={<Profile />} />
       <Route path="/create" element={<Create />} />
-      <Route path="admin-dashbord" element={<Dashboard />}>
+      <Route path="/admin-dashbord" element={<Dashboard />}>
         <Route index element={<HomeDashboard />} />
         <Route path="users" element={<UserDashboard />} />
         <Route path="posts" element={<PostsDashboard />} />

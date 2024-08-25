@@ -16,12 +16,12 @@ import { updateProfile } from "../../redux/apis/userCallApi";
 import { useDispatch } from "react-redux";
 import UpdateUserButton from "./UpdateUserButton";
 
-export default function UpdateProfile({ userId, token }) {
+export default function UpdateProfile({ userId, token, user }) {
   const [passwordValid, setPasswordValid] = useState(true);
   const [nameValid, setNameValid] = useState(true);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(user?.name || "");
   const [password, setPassword] = useState("");
-  const [bio, setBio] = useState("");
+  const [status, setStatus] = useState(user?.status || "");
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -44,8 +44,15 @@ export default function UpdateProfile({ userId, token }) {
   const handleUpdate = (e) => {
     e.preventDefault();
     if (passwordValid && nameValid) {
-      console.log({ name, password, bio });
-      updateProfile(userId, name, password, bio, `Bearer ${token}`, dispatch);
+      console.log({ name, password, status });
+      updateProfile(
+        userId,
+        name,
+        password,
+        status,
+        `Bearer ${token}`,
+        dispatch
+      );
     } else {
       dispatch({
         type: "user/setMessage",
@@ -87,6 +94,7 @@ export default function UpdateProfile({ userId, token }) {
             </InputLabel>
             <Input
               error={!nameValid}
+              value={name}
               onChange={(e) => {
                 ValideName(e);
                 setName(e.target.value);
@@ -95,7 +103,7 @@ export default function UpdateProfile({ userId, token }) {
               name="name"
               id="name"
               fullWidth
-              placeholder="Enter Your name"
+              placeholder="Enter New name"
               startAdornment={
                 <InputAdornment position="start">
                   <i className="bi bi-pencil-square" />
@@ -104,15 +112,15 @@ export default function UpdateProfile({ userId, token }) {
             />
           </FormControl>
           <FormControl variant="standard" sx={{ width: "100%" }}>
-            <InputLabel htmlFor="bio">{"Your bio"}</InputLabel>
+            <InputLabel htmlFor="status">{"Your status"}</InputLabel>
             <Input
-              onChange={(e) => setBio(e.target.value)}
-              value={bio}
+              onChange={(e) => setStatus(e.target.value)}
+              value={status}
               type="text"
-              name="bio"
-              id="bio"
+              name="status"
+              id="status"
               fullWidth
-              placeholder="Enter Your bio"
+              placeholder="Enter New status"
               startAdornment={
                 <InputAdornment position="start">
                   <i className="bi bi-pencil-square" />
@@ -130,7 +138,7 @@ export default function UpdateProfile({ userId, token }) {
             <Input
               fullWidth
               type="password"
-              placeholder="Enter Your Password"
+              placeholder="Enter New Password"
               id="password"
               onChange={(e) => {
                 validPassword(e);
